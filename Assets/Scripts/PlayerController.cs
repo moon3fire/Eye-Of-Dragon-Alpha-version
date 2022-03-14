@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform cameraTransform;
 
+    private float targenAngle;
+    private float angle;
+
     void Update()
     {
         verticalInput = Input.GetAxisRaw("Vertical");
@@ -25,8 +28,8 @@ public class PlayerController : MonoBehaviour
 
         if(direction.magnitude >= 0.1)
         {
-            float targenAngle = Mathf.Atan2(direction.x , direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y , targenAngle , ref turnSmoothVelocity , turnSmoothTime);
+            targenAngle = Mathf.Atan2(direction.x , direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+            angle = Mathf.SmoothDampAngle(transform.eulerAngles.y , targenAngle , ref turnSmoothVelocity , turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f , angle , 0f);
 
             Vector3 moveDirection = Quaternion.Euler(0f , targenAngle , 0f) * Vector3.forward;
